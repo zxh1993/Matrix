@@ -48,6 +48,8 @@ public:
 
     CMatrixD(CMatrixD&& mat);
 
+    CMatrixD(std::initializer_list<std::initializer_list<double>> list2);
+
     void load(const std::string& path);
 
     //保存到文件
@@ -97,11 +99,15 @@ public:
 
     double  at(uint rowNum,uint colNum) const;
 
+    bool isZero(uint rowNum,uint colNum);
+
     uint rowSize() const;
 
     uint colSize() const;
 
     CMatrixD & operator= (const CMatrixD& mat) = default;
+
+    CMatrixD & operator= (std::initializer_list<std::initializer_list<double>> list2);
 
     CMatrixD & operator= (CMatrixD&& mat);
 
@@ -113,6 +119,7 @@ public:
 
     CMatrixD  operator* (double num);
 
+
 private:
     //移动赋值
     void __move(CMatrixD &mat);
@@ -120,6 +127,9 @@ private:
     bool __insideRow(uint rowNum) const;
     //判断输入是否在矩阵的列范围
     bool __insideCol(uint colNum) const;
+
+    void __initList(std::initializer_list<std::initializer_list<double>> list2);
+
     std::vector<double> _arrEle;
     std::vector<uint> _arrRowNum;
     std::vector<uint> _arrColNum;

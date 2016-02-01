@@ -10,6 +10,11 @@ CMatrixD::CMatrixD(CMatrixD &&mat)
     __move(mat);
 }
 
+CMatrixD::CMatrixD(std::initializer_list<std::initializer_list<double> > list2)
+{
+    __initList(list2);
+}
+
 void CMatrixD::load(const std::string &path)
 {
     reset(_rowSize,_colSize,0);
@@ -97,7 +102,8 @@ void CMatrixD::print(const std::string &info, uint eachSize)
     for (uint i = 1; i <= _rowSize; i++)
     {
         for (uint j = 1; j <= _colSize; j++)
-            std::cout << std::left << std::setw(eachSize) << (at(i,j) > MAT_MIN_ELE ? at(i,j) : 0) <<" ";
+            std::cout << std::left << std::setw(eachSize) << (fabs(at(i,j)) > MAT_MIN_ELE ? at(i,j) : 0) <<" ";
+            //std::cout << std::left << std::setw(eachSize) << at(i,j)  <<" ";
         std::cout << std::endl;
     }
 }
@@ -249,6 +255,34 @@ bool CMatrixD::__insideCol(uint colNum) const
     return (1<=colNum && colNum<=_colSize);
 }
 
+void CMatrixD::__initList(std::initializer_list<std::initializer_list<double> > list2)
+{
+    uint rowSize = 0;
+    uint colSize = 0;
+    for (auto &row : list2)
+    {
+        rowSize++;
+        if (rowSize > 1)
+        {
+            if (row.size() != colSize )
+                throw MatException("initList err");
+        }
+        else
+        {
+            colSize = row.size();
+        }
+    }
+    reset(rowSize,colSize,0);
+    uint i = 0;
+    for (auto &row : list2)
+    {
+        for (auto &ele : row)
+        {
+            _arrEle[i++] = ele;
+        }
+    }
+}
+
 
 double & CMatrixD::at(uint rowNum,uint colNum)
 {
@@ -264,6 +298,11 @@ double  CMatrixD::at(uint rowNum,uint colNum) const
         return _arrEle[_colSize*(_arrRowNum[rowNum - 1])+_arrColNum[colNum - 1]];
     else
         throw MatException("---at---");
+}
+
+bool CMatrixD::isZero(uint rowNum, uint colNum)
+{
+    return fabs(at(rowNum, colNum)) < MAT_MIN_ELE;
 }
 
 uint CMatrixD::rowSize() const
@@ -292,6 +331,12 @@ void CMatrixD::__move(CMatrixD &mat)
 CMatrixD &CMatrixD::operator=(CMatrixD &&mat)
 {
     __move(mat);
+    return *this;
+}
+
+CMatrixD &CMatrixD::operator=(std::initializer_list<std::initializer_list<double> > list2)
+{
+    __initList(list2);
     return *this;
 }
 
