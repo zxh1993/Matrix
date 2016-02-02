@@ -364,14 +364,14 @@ CMatrixD CMatrixD::operator-(const CMatrixD &mat)
 
 CMatrixD CMatrixD::operator*(const CMatrixD &mat)
 {
-    if (!((mat.rowSize() == _colSize) && (mat.colSize() == _rowSize)))
+    if (this->colSize() != mat.rowSize())
         throw MatException("* err");
-    uint rowSize = _rowSize;
+    uint rowSize = this->rowSize();
     uint colSize = mat.colSize();
-    uint plusTimes = _colSize;
+    uint plusTimes = this->colSize();
     CMatrixD matAns(rowSize, colSize);
-    for (uint i = 1; i <= _rowSize; i++)
-        for (uint j=1; j <= _colSize; j++)
+    for (uint i = 1; i <= rowSize; i++)
+        for (uint j=1; j <= colSize; j++)
             for (uint k=1; k <= plusTimes; k++)
                 matAns.at(i,j) += this->at(i,k) * mat.at(k,j);
     return matAns;

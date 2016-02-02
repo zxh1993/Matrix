@@ -105,19 +105,19 @@ public:
 
     uint colSize() const;
 
-    CMatrixD & operator= (const CMatrixD& mat) = default;
+    CMatrixD & operator=(const CMatrixD& mat) = default;
 
-    CMatrixD & operator= (std::initializer_list<std::initializer_list<double>> list2);
+    CMatrixD & operator=(std::initializer_list<std::initializer_list<double>> list2);
 
-    CMatrixD & operator= (CMatrixD&& mat);
+    CMatrixD & operator=(CMatrixD&& mat);
 
-    CMatrixD  operator+ (const CMatrixD& mat);
+    CMatrixD  operator+(const CMatrixD& mat);
 
-    CMatrixD  operator- (const CMatrixD& mat);
+    CMatrixD  operator-(const CMatrixD& mat);
 
-    CMatrixD  operator* (const CMatrixD& mat);
+    CMatrixD  operator*(const CMatrixD& mat);
 
-    CMatrixD  operator* (double num);
+    CMatrixD  operator*(double num);
 
 
 private:
