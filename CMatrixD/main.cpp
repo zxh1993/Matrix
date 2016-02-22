@@ -1,10 +1,10 @@
 #include <iostream>
 #include <tuple>
 #include "CMatrixD.h"
-#define DEBUG_PRO 0
+#define DEBUG_PRO 1
 using Ans = std::tuple<CMatrixD, CMatrixD, uint>;
 
-Ans equation(const CMatrixD &matx)
+auto equation(const CMatrixD &matx)
 {
     CMatrixD mat(matx);                                    ///<增广矩阵
     uint equationNum = mat.rowSize();                      ///<方程的个数
